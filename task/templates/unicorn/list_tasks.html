@@ -1,0 +1,51 @@
+<div>
+  <form>
+      <div class="input-group center col-6">
+      <input type="text" unicorn:model="create_task_name" placeholder="Task..." class="form-control">
+      <div class="input-group-append">
+        <button unicorn:click="add_task" class="btn btn-outline-secondary" type="button" id="button-addon2">Add a new task</button>
+      </div>
+    </div>
+  </form>
+     <p>
+        {% if tasks %}
+            <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Update</th>
+                        <th scope="col">Delete</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for task in tasks %}
+                    <tr>
+                      {% if update_task_id == task.id %}
+                            <th scope="row">{{ task.id }}</th>
+                          <td><input unicorn:model="update_task_name" type="text"></td>
+                          <td>
+                              <button class="btn-success" unicorn:click="update_task">Save</button>
+                              <button class="btn-danger" unicorn:click="cancel_action">Cancel</button>
+                          </td>
+                          <td><button class="btn-danger" unicorn:click="delete_task({{ task.id }})">Delete</button></td>
+
+                      {% else %}
+                             <th scope="row">{{ task.id }}</th>
+                          <td>{{ task.name }}</td>
+                          <td>
+                              <button class="btn-success" unicorn:click="set_update_task_info({{ task.id }})">Update</button>
+                          </td>
+                          <td><button class="btn-danger" unicorn:click="delete_task({{ task.id }})">Delete</button></td>
+                      {% endif %}
+                    </tr>
+                     {% endfor %}
+                  </tbody>
+                </table>
+
+        {% else %}
+        No tasks
+        {% endif %}
+    </p>
+</div>
